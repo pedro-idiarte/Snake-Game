@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public final int pauseState = 4;
 
     // TITLE STATE
-    int commandNum =0;
+    int commandNum = 0;
 
     // Sreen Painel
     static final int SCREEN_WIDTH = 600;
@@ -45,8 +45,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void startGame() {
-
         gameState = titleState;
+
+        if (gameState == titleState) {
+            gameState = titleState;
+            running = true;
+            timer = new Timer(DELAY, this);
+            timer.start();
+        }
 
         if (gameState == playState) {
             gameState = playState;
@@ -66,7 +72,8 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
         if (gameState == titleState) {
             drawTitleScreen(g);
-        } else if (gameState == playState) {
+        }
+        if (gameState == playState) {
 
             if (running) {
 
@@ -114,61 +121,67 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void drawTitleScreen(Graphics g) {
+        if (gameState == titleState) {
 
-        /*
-         * //SHADOW OF TEXT
-         * g.setColor(Color.gray);
-         * g.setFont(new Font("Ink Free", Font.BOLD, 90));
-         * FontMetrics metrics3 = getFontMetrics(g.getFont());
-         * g.drawString("Snake Game", (SCREEN_WIDTH -
-         * metrics3.stringWidth("Snake Game")) / 2, SCREEN_HEIGHT /3 );
-         */
-        g.setColor(Color.green);
-        g.setFont(new Font("Ink Free", Font.BOLD, 90));
-        FontMetrics metrics4 = getFontMetrics(g.getFont());
-        g.drawString("Snake Game", (SCREEN_WIDTH - metrics4.stringWidth("Snake Game")) / 2, SCREEN_HEIGHT / 4);
+            /*
+             * //SHADOW OF TEXT
+             * g.setColor(Color.gray);
+             * g.setFont(new Font("Ink Free", Font.BOLD, 90));
+             * FontMetrics metrics3 = getFontMetrics(g.getFont());
+             * g.drawString("Snake Game", (SCREEN_WIDTH -
+             * metrics3.stringWidth("Snake Game")) / 2, SCREEN_HEIGHT /3 );
+             */
+            g.setColor(Color.green);
+            g.setFont(new Font("Ink Free", Font.BOLD, 90));
+            FontMetrics metrics4 = getFontMetrics(g.getFont());
+            g.drawString("Snake Game", (SCREEN_WIDTH - metrics4.stringWidth("Snake Game")) / 2, SCREEN_HEIGHT / 4);
 
-        // NO BORDER GAME MODE
-        g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
-        FontMetrics metrics5 = getFontMetrics(g.getFont());
-        g.drawString("No Border Mode", (SCREEN_WIDTH - metrics5.stringWidth("No Border Mode")) / 2,
-                SCREEN_HEIGHT / 1 - 200);
-        if (commandNum == 0) {
-            g.drawString(">", SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 1 - 200);
+            // NO BORDER GAME MODE
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics5 = getFontMetrics(g.getFont());
+            g.drawString("No Border Mode", (SCREEN_WIDTH - metrics5.stringWidth("No Border Mode")) / 2,
+                    SCREEN_HEIGHT / 1 - 200);
+            if (commandNum == 0) {
+                g.drawString(">", SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 1 - 200);
 
-        }
-        // BORDER GAME MODE
-        g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
-        FontMetrics metrics6 = getFontMetrics(g.getFont());
-        g.drawString("Border Mode", (SCREEN_WIDTH - metrics6.stringWidth("Border Mode")) / 2, SCREEN_HEIGHT / 1 - 150);
-        if (commandNum == 1) {
-            g.drawString(">", SCREEN_WIDTH / 2 - 155, SCREEN_HEIGHT / 1 - 150);
+            }
+            // BORDER GAME MODE
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics6 = getFontMetrics(g.getFont());
+            g.drawString("Border Mode", (SCREEN_WIDTH - metrics6.stringWidth("Border Mode")) / 2,
+                    SCREEN_HEIGHT / 1 - 150);
+            if (commandNum == 1) {
+                g.drawString(">", SCREEN_WIDTH / 2 - 155, SCREEN_HEIGHT / 1 - 150);
 
-        }
-        // BUFF GAME MODE
-        g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
-        FontMetrics metrics7 = getFontMetrics(g.getFont());
-        g.drawString("Buff Mode", (SCREEN_WIDTH - metrics7.stringWidth("Buff Mode")) / 2, SCREEN_HEIGHT / 1 - 100);
-        if (commandNum == 2) {
-            g.drawString(">", SCREEN_WIDTH / 2 - 135, SCREEN_HEIGHT / 1 - 100);
+            }
+            // BUFF GAME MODE
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics7 = getFontMetrics(g.getFont());
+            g.drawString("Buffed Mode", (SCREEN_WIDTH - metrics7.stringWidth("Buffed Mode")) / 2,
+                    SCREEN_HEIGHT / 1 - 100);
+            if (commandNum == 2) {
+                g.drawString(">", SCREEN_WIDTH / 2 - 155, SCREEN_HEIGHT / 1 - 100);
 
-        }
-        // QUIT
-        g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
-        FontMetrics metrics8 = getFontMetrics(g.getFont());
-        g.drawString("Quit", (SCREEN_WIDTH - metrics8.stringWidth("Quit")) / 2, SCREEN_HEIGHT / 1 - 50);
-        if (commandNum == 3) {
-            g.drawString(">", SCREEN_WIDTH / 2 - 80, SCREEN_HEIGHT / 1 - 50);
+            }
+            // QUIT
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics8 = getFontMetrics(g.getFont());
+            g.drawString("Quit", (SCREEN_WIDTH - metrics8.stringWidth("Quit")) / 2, SCREEN_HEIGHT / 1 - 50);
+            if (commandNum == 3) {
+                g.drawString(">", SCREEN_WIDTH / 2 - 80, SCREEN_HEIGHT / 1 - 50);
+
+            }
 
         }
 
     }
 
     public void drawPauseSreen(Graphics g) {
+
         // Score
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 40));
@@ -180,7 +193,9 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("PAUSED", (SCREEN_WIDTH - metrics2.stringWidth("PAUSED")) / 2, SCREEN_HEIGHT / 2);
+        // TIMER STOP
         timer.stop();
+
     }
 
     public void newPoint() {
@@ -189,23 +204,27 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void move() {
-        for (int i = bodyParts; i > 0; i--) {
-            x[i] = x[i - 1];
-            y[i] = y[i - 1];
-        }
-        switch (direction) {
-            case 'U':
-                y[0] = y[0] - UNIT_SIZE;
-                break;
-            case 'D':
-                y[0] = y[0] + UNIT_SIZE;
-                break;
-            case 'L':
-                x[0] = x[0] - UNIT_SIZE;
-                break;
-            case 'R':
-                x[0] = x[0] + UNIT_SIZE;
-                break;
+
+        if (gameState == playState) {
+
+            for (int i = bodyParts; i > 0; i--) {
+                x[i] = x[i - 1];
+                y[i] = y[i - 1];
+            }
+            switch (direction) {
+                case 'U':
+                    y[0] = y[0] - UNIT_SIZE;
+                    break;
+                case 'D':
+                    y[0] = y[0] + UNIT_SIZE;
+                    break;
+                case 'L':
+                    x[0] = x[0] - UNIT_SIZE;
+                    break;
+                case 'R':
+                    x[0] = x[0] + UNIT_SIZE;
+                    break;
+            }
         }
     }
 
@@ -219,30 +238,33 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkCollisions() {
-        // checks if head collides with body
-        for (int i = bodyParts; i > 0; i--) {
-            if ((x[0] == x[i]) && (y[0] == y[i])) {
+
+        if (gameState == playState) {
+            // checks if head collides with body
+            for (int i = bodyParts; i > 0; i--) {
+                if ((x[0] == x[i]) && (y[0] == y[i])) {
+                    running = false;
+                }
+            }
+            // checks if head collides left border
+            if (x[0] < 0) {
                 running = false;
             }
-        }
-        // checks if head collides left border
-        if (x[0] < 0) {
-            running = false;
-        }
-        // checks if head collides right border
-        if (x[0] > SCREEN_WIDTH) {
-            running = false;
-        }
-        // checks if head collides top border
-        if (y[0] < 0) {
-            running = false;
-        }
-        // checks if head collides bottom border
-        if (y[0] > SCREEN_HEIGHT) {
-            running = false;
-        }
-        if (!running) {
-            timer.stop();
+            // checks if head collides right border
+            if (x[0] > SCREEN_WIDTH) {
+                running = false;
+            }
+            // checks if head collides top border
+            if (y[0] < 0) {
+                running = false;
+            }
+            // checks if head collides bottom border
+            if (y[0] > SCREEN_HEIGHT) {
+                running = false;
+            }
+            if (!running) {
+                timer.stop();
+            }
         }
     }
 
@@ -279,13 +301,35 @@ public class GamePanel extends JPanel implements ActionListener {
             if (gameState == titleState) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
+                        if (e.getKeyCode() == KeyEvent.VK_UP) {
                             commandNum--;
-                        
+                            if (commandNum < 0) {
+                                commandNum = 3;
+                            }
+                        }
                         break;
                     case KeyEvent.VK_DOWN:
+                        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                             commandNum++;
-                        
+                            if (commandNum > 3) {
+                                commandNum = 0;
+                            }
+                        }
                         break;
+                    case KeyEvent.VK_ENTER:
+                        if (commandNum == 0) {
+                            gameState = playState1;
+                        }
+                        if (commandNum == 1) {
+                            gameState = playState;
+                        }
+                        if (commandNum == 2) {
+                            gameState = playState2;
+                        }
+                        if (commandNum == 3) {
+                            System.exit(0);
+                            ;
+                        }
                 }
             }
             if (gameState == playState) {
@@ -320,10 +364,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     gameState = playState;
                     timer.start();
-
                 }
             }
-            
+
         }
 
     }

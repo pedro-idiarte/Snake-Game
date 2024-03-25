@@ -25,3 +25,7 @@ Game Mode Select Screen
 ### Game Over Screen:
 
 ![GameOver](https://github.com/pedro-idiarte/Snake-Game/assets/135479968/fb3696ab-34d9-44d9-a951-b39dbd650331)
+
+
+#### Inspired in Java snake game by Bro Code in Youtube
+Link: https://www.youtube.com/watch?v=bI6e6qjJ8JQ

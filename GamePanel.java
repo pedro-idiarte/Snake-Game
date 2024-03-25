@@ -5,7 +5,8 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    // Game State
+    // GGAME STATES
+
     public int gameState;
     public final int titleState = 0;
     public final int playState = 1;
@@ -17,11 +18,13 @@ public class GamePanel extends JPanel implements ActionListener {
     // TITLE STATE
     int commandNum = 0;
 
-    // Sreen Painel
+    // SCREEN PAINEL
+
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
 
-    // Unit Sizes and Delay
+    // UNIT SIZES AND DELAY
+
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
     static final int DELAY = 75;
@@ -95,13 +98,14 @@ public class GamePanel extends JPanel implements ActionListener {
                         g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                     } else {
                         g.setColor(new Color(45, 180, 0));
+                        g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
 
                         // Random Colors for Snake
                         // g.setColor(new
                         // Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
                         // g.setColor(new Color((255),(100),(108)));
 
-                        g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                        
                     }
                 }
                 g.setColor(Color.red);
@@ -110,7 +114,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + pointsEaten)) / 2,
                         g.getFont().getSize());
             } else {
-                gameState=gameOverState;
+                gameState = gameOverState;
                 gameOver(g);
 
             }
@@ -179,20 +183,22 @@ public class GamePanel extends JPanel implements ActionListener {
 
             }
 
+            drawSnakeTitleState(g);
+
         }
 
     }
 
     public void drawPauseSreen(Graphics g) {
 
-        // Score
+        // SCORE
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 40));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
         g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + pointsEaten)) / 2,
                 g.getFont().getSize());
 
-        // Pause Screen
+        // PAUSE SCREEN
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
@@ -245,25 +251,27 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkCollisions() {
 
         if (gameState == playState) {
-            // checks if head collides with body
+
+            // CHECK IF HEAD COLIDES WITH BODY
+
             for (int i = bodyParts; i > 0; i--) {
                 if ((x[0] == x[i]) && (y[0] == y[i])) {
                     running = false;
                 }
             }
-            // checks if head collides left border
+            // CHECKS IF HEAD COLIDES WITH LEFT BORDER
             if (x[0] < 0) {
                 running = false;
             }
-            // checks if head collides right border
+            // CHECKS IF HEAD COLIDES WITH RIGHT BORDER
             if (x[0] > SCREEN_WIDTH) {
                 running = false;
             }
-            // checks if head collides top border
+            // CHECKS IF HEAD COLIDES WITH TOP BORDER
             if (y[0] < 0) {
                 running = false;
             }
-            // checks if head collides bottom border
+            // CHECKS IF HEAD COLIDES WITH BOTTOM BORDER
             if (y[0] > SCREEN_HEIGHT) {
                 running = false;
             }
@@ -273,20 +281,46 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    public void drawSnakeTitleState(Graphics g) {
+
+        if (gameState == titleState) {
+            // FRUIT TITLESTATE
+            g.setColor(Color.red);
+            g.fillOval(370, 260, UNIT_SIZE, UNIT_SIZE);
+
+            // SNAKE TITLESTATE
+            g.setColor(Color.green);
+            g.fillRect(250, 260, UNIT_SIZE, UNIT_SIZE);
+            g.setColor(new Color(45, 180, 0));
+            g.fillRect(225,260, UNIT_SIZE, UNIT_SIZE);
+            g.setColor(new Color(45, 180, 0));
+            g.fillRect(200,260, UNIT_SIZE, UNIT_SIZE);
+            g.setColor(new Color(45, 180, 0));
+            g.fillRect(175, 260, UNIT_SIZE, UNIT_SIZE);
+            g.setColor(new Color(45, 180, 0));
+            g.fillRect(150, 260, UNIT_SIZE, UNIT_SIZE);
+            g.setColor(new Color(45, 180, 0));
+            g.fillRect(125, 260, UNIT_SIZE, UNIT_SIZE);
+        }
+
+    }
+
     public void gameOver(Graphics g) {
-       if(gameState==gameOverState){
-            // Score
+        if (gameState == gameOverState) {
+
+            // SCORE
             g.setColor(Color.red);
             g.setFont(new Font("Ink Free", Font.BOLD, 40));
             FontMetrics metrics1 = getFontMetrics(g.getFont());
             g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + pointsEaten)) / 2,
                     g.getFont().getSize());
-            // GameOver text
+
+            // GAMEOVER TEXT
             g.setColor(Color.red);
             g.setFont(new Font("Ink Free", Font.BOLD, 75));
             FontMetrics metrics2 = getFontMetrics(g.getFont());
             g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
-       }
+        }
     }
 
     @Override
@@ -303,7 +337,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e)  {
+        public void keyPressed(KeyEvent e) {
             if (gameState == titleState) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
@@ -324,13 +358,13 @@ public class GamePanel extends JPanel implements ActionListener {
                         break;
                     case KeyEvent.VK_ENTER:
                         if (commandNum == 0) {
-                            gameState = playState1;
+                            gameState = titleState;
                         }
                         if (commandNum == 1) {
                             gameState = playState;
                         }
                         if (commandNum == 2) {
-                            gameState = playState2;
+                            gameState = titleState;
                         }
                         if (commandNum == 3) {
                             System.exit(0);
@@ -361,12 +395,12 @@ public class GamePanel extends JPanel implements ActionListener {
                         }
                         break;
                     case KeyEvent.VK_SPACE:
-                        if(gameState!=gameOverState){
-                        if (gameState == playState) {
-                            gameState = pauseState;
-                            drawPauseSreen(getGraphics());
+                        if (gameState != gameOverState) {
+                            if (gameState == playState) {
+                                gameState = pauseState;
+                                drawPauseSreen(getGraphics());
+                            }
                         }
-                    }
                         break;
                 }
             } else if (gameState == pauseState) {

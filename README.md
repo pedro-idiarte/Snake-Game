@@ -1,13 +1,14 @@
 # Snake-Game
 
-The game has already:
+#The game functions:
 
 1 Game Mode
 Pause Screen 
 and
 Game Mode Select Screen
 
-Screenshots:
+
+#Screenshots:
 
 Title Screen:
 

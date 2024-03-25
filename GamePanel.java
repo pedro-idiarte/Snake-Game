@@ -12,6 +12,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public final int playState1 = 2;
     public final int playState2 = 3;
     public final int pauseState = 4;
+    public final int gameOverState = 5;
 
     // TITLE STATE
     int commandNum = 0;
@@ -109,7 +110,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + pointsEaten)) / 2,
                         g.getFont().getSize());
             } else {
+                gameState=gameOverState;
                 gameOver(g);
+
             }
 
             if (gameState == pauseState) {
@@ -188,11 +191,13 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics1 = getFontMetrics(g.getFont());
         g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + pointsEaten)) / 2,
                 g.getFont().getSize());
+
         // Pause Screen
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("PAUSED", (SCREEN_WIDTH - metrics2.stringWidth("PAUSED")) / 2, SCREEN_HEIGHT / 2);
+
         // TIMER STOP
         timer.stop();
 
@@ -269,18 +274,19 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g) {
-        // Score
-        g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
-        FontMetrics metrics1 = getFontMetrics(g.getFont());
-        g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + pointsEaten)) / 2,
-                g.getFont().getSize());
-        // GameOver text
-        g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 75));
-        FontMetrics metrics2 = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
-
+       if(gameState==gameOverState){
+            // Score
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics1 = getFontMetrics(g.getFont());
+            g.drawString("Score: " + pointsEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + pointsEaten)) / 2,
+                    g.getFont().getSize());
+            // GameOver text
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 75));
+            FontMetrics metrics2 = getFontMetrics(g.getFont());
+            g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+       }
     }
 
     @Override
@@ -297,7 +303,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e)  {
             if (gameState == titleState) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
@@ -355,9 +361,12 @@ public class GamePanel extends JPanel implements ActionListener {
                         }
                         break;
                     case KeyEvent.VK_SPACE:
+                        if(gameState!=gameOverState){
                         if (gameState == playState) {
                             gameState = pauseState;
+                            drawPauseSreen(getGraphics());
                         }
+                    }
                         break;
                 }
             } else if (gameState == pauseState) {

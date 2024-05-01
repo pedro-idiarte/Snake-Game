@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener {
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
     int bodyParts = 6;
-    int pointsEaten;
+    int pointsEaten=-1;
     int pointX;
     int pointY;
     char direction = 'R';
@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements ActionListener {
             running = true;
             timer = new Timer(DELAY, this);
             timer.start();
+            
         }
 
         if (gameState == playState) {
@@ -77,6 +78,8 @@ public class GamePanel extends JPanel implements ActionListener {
         if (gameState == titleState) {
             drawTitleScreen(g);
         }
+
+        
         if (gameState == playState) {
 
             if (running) {
@@ -88,6 +91,8 @@ public class GamePanel extends JPanel implements ActionListener {
                  * g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
                  * }
                  */
+
+            
 
                 g.setColor(Color.red);
                 g.fillOval(pointX, pointY, UNIT_SIZE, UNIT_SIZE);
@@ -210,8 +215,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void newPoint() {
+        
         pointX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
         pointY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
+        
     }
 
     public void move() {
@@ -320,6 +327,10 @@ public class GamePanel extends JPanel implements ActionListener {
             g.setFont(new Font("Ink Free", Font.BOLD, 75));
             FontMetrics metrics2 = getFontMetrics(g.getFont());
             g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+
+            //BACK TO MENU
+
+            
         }
     }
 
@@ -361,14 +372,14 @@ public class GamePanel extends JPanel implements ActionListener {
                             gameState = titleState;
                         }
                         if (commandNum == 1) {
-                            gameState = playState;
+                            gameState=playState;
+                            
                         }
                         if (commandNum == 2) {
                             gameState = titleState;
                         }
                         if (commandNum == 3) {
                             System.exit(0);
-                            ;
                         }
                 }
             }
@@ -403,12 +414,18 @@ public class GamePanel extends JPanel implements ActionListener {
                         }
                         break;
                 }
-            } else if (gameState == pauseState) {
+            } 
+            else if (gameState == pauseState) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     gameState = playState;
                     timer.start();
                 }
             }
+            /*if(gameState == gameOverState){
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    startGame();
+                }
+            }*/
 
         }
 
